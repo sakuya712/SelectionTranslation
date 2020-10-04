@@ -10,16 +10,67 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:selection-translation.helloWorld"
+		"onCommand:selection-translation.fromMyToTranslation",
+		"onCommand:selection-translation.fromTranslationToMy"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "selection-translation.helloWorld",
-				"title": "Hello World"
+				"command": "selection-translation.fromMyToTranslation",
+				"title": "My language => Translation language"
+			},
+			{
+				"command": "selection-translation.fromTranslationToMy",
+				"title": "Translation language => My language"
 			}
-		]
+		],
+		"configuration":{
+			"title": "Translation Variable",
+			"properties": {
+				"selection-translation.GAS setting":{
+					"type" : "string",
+					"default": "",
+					"description": "Set your GAS url"
+				},
+				"selection-translation.My language":{
+					"enum": ["ja","en","es","zh-CN","zh-TW","ko","ru","fr","de","ms","pt"],
+					"type" : "string",
+					"default": "ja",
+					"description": "Set your own language"
+				},
+				"selection-translation.Translation language":{
+					"enum": ["ja","en","es","zh-CN","zh-TW","ko","ru","fr","de","ms","pt"],
+					"type" : "string",
+					"default": "en",
+					"description": "Set the language to translate"
+				}
+			}
+		},
+		"keybindings": [
+			{
+				"command": "selection-translation.fromMyToTranslation",
+				"key": "ctrl+alt+shift+t"
+			},
+			{
+				"command": "selection-translation.fromTranslationToMy",
+				"key": "ctrl+alt+shift+m"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorHasSelection",
+					"command": "selection-translation.fromMyToTranslation",
+					"group": "myGroup1"
+				},
+				{
+					"when": "editorHasSelection",
+					"command": "selection-translation.fromTranslationToMy",
+					"group": "myGroup1"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
